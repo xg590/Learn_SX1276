@@ -1,3 +1,11 @@
+### Overview
+* SX1276 is a LoRa modem that can send or receive data over a long distance.
+* Many ESP32 LoRa development boards are using this modem: Heltec WiFi LoRa 32 V2, TTGO T-Beam V1.1 
+* Adafruit also created a standalone breakout: Adafruit RFM95W
+* One key thing is they all use SPI as the control interface of LoRa modem.
+* SPI pins on RFM95W are exposed so we can hook it up with Raspberry Pi Pico while pins are marked on other two ESP32 LoRa development boards.
+### See the wiring
+
 ### How to use SX1276
 * Enable the module if use Adafruit RFM95W
 * Configure SPI communication to control the LoRa modem

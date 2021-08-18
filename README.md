@@ -1,8 +1,10 @@
 ### Overview
 * This repo will provide MicroPython codes for basic Tx transmittion and Rx reception.
 * SX1276 is a LoRa modem that can send or receive data over a long distance.
-* Many ESP32 LoRa development boards are using this modem: Heltec WiFi LoRa 32 V2, TTGO T-Beam V1.1
-* Adafruit also created a standalone breakout: Adafruit RFM95W
+* Adafruit created a standalone breakout: Adafruit RFM95W 
+    * Example code is for RFM95W with the help of Raspberry Pi Pico
+* Many ESP32 LoRa development boards are using this modem: Heltec WiFi LoRa 32 V2, TTGO T-Beam V1.1 
+    * Example code can drive the on-board modem after GPIO remapping
 * One key thing is they all use SPI as the control interface of LoRa modem.
 * SPI pins on RFM95W are exposed so we can hook it up with Raspberry Pi Pico while pins are marked on other two ESP32 LoRa development boards.
 ### See the wiring

@@ -101,6 +101,7 @@
   * In ISR, Read FIFO data buffer to get payload
 * Next IRQ
 ### Follow code to learn SX1276
+* Use Rasberry Pi Pico and Adafruit RFM95W as the learning platform
 * These codes are commented extensively for learning
 * [Tx](SX1276_Tx.py) 
 * [Rx](SX1276_Rx.py)

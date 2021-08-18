@@ -102,7 +102,6 @@
 * Next IRQ
 ### Follow code to learn SX1276
 * Use Rasberry Pi Pico and Adafruit RFM95W as the learning platform
-* These codes are commented extensively for learning
-* [Tx](SX1276_Tx.py) 
-* [Rx](SX1276_Rx.py)
-* Thanks [martynwheeler/u-lora](https://github.com/martynwheeler/u-lora)
+* [How to](https://github.com/xg590/IoT/tree/master/MicroPython#add-micropython-to-raspberry-pi-pico-hello-world) run MicroPython on Rapsberry Pi Pico
+* [Tx](SX1276_Tx.py) and [Rx](SX1276_Rx.py) MicroPython codes are commented extensively for learning   
+* Thanks [martynwheeler/u-lora](https://github.com/martynwheeler/u-lora) and thanks [jgromes](https://github.com/jgromes/RadioLib/issues/347)

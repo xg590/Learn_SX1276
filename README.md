@@ -1,13 +1,51 @@
 ### Overview
 * SX1276 is a LoRa modem that can send or receive data over a long distance.
-* Many ESP32 LoRa development boards are using this modem: Heltec WiFi LoRa 32 V2, TTGO T-Beam V1.1 
+* Many ESP32 LoRa development boards are using this modem: Heltec WiFi LoRa 32 V2, TTGO T-Beam V1.1
 * Adafruit also created a standalone breakout: Adafruit RFM95W
 * One key thing is they all use SPI as the control interface of LoRa modem.
 * SPI pins on RFM95W are exposed so we can hook it up with Raspberry Pi Pico while pins are marked on other two ESP32 LoRa development boards.
 ### See the wiring
-
+* Wiring RFM95W with Pico<br/>
+   * We decide which GPIO we want to use
+   ```
+    # RFM95W         Pico GPIO
+    LoRa_MISO_Pin  = 16
+    LoRa_CS_Pin    = 17
+    LoRa_SCK_Pin   = 18
+    LoRa_MOSI_Pin  = 19
+    LoRa_G0_Pin    = 20 # DIO0_Pin
+    LoRa_EN_Pin    = 21
+    LoRa_RST_Pin   = 22
+    SPI_CH         =  0
+   ```
+<img src="Pico_RFM95W.png"> </img>
+* Heltec WiFi LoRa 32 V2<br/>
+   * Predefined (see the pinout)
+   ```
+    LoRa_MISO_Pin = 19
+    LoRa_MOSI_Pin = 27
+    LoRa_SCK_Pin  =  5
+    LoRa_CS_Pin   = 18
+    LoRa_RST_Pin  = 14
+    LoRa_DIO0_Pin = 26
+    LoRa_DIO1_Pin = 35
+    LoRa_DIO2_Pin = 34
+    SPI_CH        =  1
+   ```
+<img src="LoRa_32.png"> </img>
+* TTGO T-Beam V1.1<br/>
+   * Predefined (see the pinout)
+   ```
+    LoRa_MISO_Pin = 19
+    LoRa_MOSI_Pin = 27
+    LoRa_SCK_Pin  =  5
+    LoRa_CS_Pin   = 18
+    LoRa_RST_Pin  = 23
+    LoRa_DIO0_Pin = 26
+   ```
+<img src="T-Beam.webp"> </img>
 ### How to use SX1276
-* Enable the module if use Adafruit RFM95W
+* Enable the module if use Adafruit RFM95W (No enable pin on other ESP32 development boards so they are always enabled)
 * Configure SPI communication to control the LoRa modem
 * Choose LoRa Modem other than FSK/OOK Modem
 * Set bandwidth, coding rate, header mode, spreading factor, preamble length, frequency, amplifier

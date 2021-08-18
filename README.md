@@ -1,4 +1,5 @@
 ### Overview
+* This repo will provide basic Tx transmittion code and Rx reception code.
 * SX1276 is a LoRa modem that can send or receive data over a long distance.
 * Many ESP32 LoRa development boards are using this modem: Heltec WiFi LoRa 32 V2, TTGO T-Beam V1.1
 * Adafruit also created a standalone breakout: Adafruit RFM95W
@@ -48,9 +49,31 @@
 * Enable the module if use Adafruit RFM95W (No enable pin on other ESP32 development boards so they are always enabled)
 * Configure SPI communication to control the LoRa modem
 * Choose LoRa Modem other than FSK/OOK Modem
-* Set bandwidth, coding rate, header mode, spreading factor, preamble length, frequency, amplifier
+* Set parameters: bandwidth (bw, Following waterfall diagram is what the signal out of LoRa modem looks like, I might provide a theoretical tutorial in the future), coding rate (CR), header mode, spreading factor (SF), syncword, preamble length, frequency, amplifier.
 * Set an interrupt routine service to read incoming message and to monitor modem's working status
 * Write FIFO data buffer when transmit and read when receive.
+### Packet Structure
+* Waterfall diagram that shows the physical representation of modulated signal.
+<img src="Packet_Structure_Waterfall.jpg"></img>
+* Header (exists in explicit mode): Payload length, payload's coding rate
+* Explicit header's coding rate is 4/8 and payload's could be different (Tx tells Rx which CR Tx uses).
+* SF is for whole packet
+<img src="Packet_Structure.png"></img>
+### 4.1.2. LoRa ® Digital Interface
+* The LoRa ® modem comprises three types of digital interface,
+  * static configuration registers
+  * status registers
+  * a 256-byte user-defined FIFO data buffer
+* We control the modem through this digital interface
+  * Practically, we read/write modem's registers via SPI protocol so we can configure its parameters (static configuration registers), get status, send or receive data (buffer registers).
+### FIFO Buffer
+<img src="FIFO_Buffer.png"></img>
+* In order to write packet data into FIFO user should:
+  1. Set register RegFifoAddrPtr's content to *RegFifoTxBaseAddr (register RegFifoTxBaseAddr's content).
+  2. Write *RegPayloadLength bytes to the FIFO (RegFifo)
+* In order to read packet data from FIFO user should:
+  1. Set RegFifoAddrPtr to *RegFifoRxCurrentAddr.
+  2. Read RegRxNbBytes from RegFifo
 ### Jargon in [Datasheet](DS_SX1276-7-8-9_W_APP_V7.pdf)
 * RF: Radio Frequency
 * RFI: RF Input
@@ -62,11 +85,6 @@
 * PA_HF and PA_LF are high efficiency amplifiers
 * AFC: automatic frequency correction
 * RFOP: RF output power
-### 4.1.2. LoRa ® Digital Interface
-* The LoRa ® modem comprises three types of digital interface,
-  * static configuration registers
-  * status registers
-  * a 256-byte user-defined FIFO data buffer
 ### Data Transmission Sequence (Figure 9)
 * Change to Standby mode so the modem initiate everything
 * Start Tx loop
@@ -82,21 +100,8 @@
 * Wait for IRQ (RxDone and ValidHeader/PayloadCrcError)
   * In ISR, Read FIFO data buffer to get payload
 * Next IRQ
-### Packet Structure
-<img src="Packet_Structure.png"></img>
-* Header (exists in explicit mode): Payload length, payload's coding rate (Tx tells Rx which CR it uses)
-* Explicit header's coding rate is 4/8 and payload's could be different.
-* SF is for whole packet
-<img src="Packet_Structure_Waterfall.jpg"></img>
-### FIFO Buffer
-<img src="FIFO_Buffer.png"></img>
-* In order to write packet data into FIFO user should:
-  1. Set RegFifoAddrPtr to *RegFifoTxBaseAddr.
-  2. Write *RegPayloadLength bytes to the FIFO (RegFifo)
-* In order to read packet data from FIFO user should:
-  1. Set RegFifoAddrPtr to *RegFifoRxCurrentAddr.
-  2. Read RegRxNbBytes from RegFifo
 ### Follow code to learn SX1276
 * These codes are commented extensively for learning
-* [Tx](SX1276_Tx.py) [Rx](SX1276_Rx.py)
+* [Tx](SX1276_Tx.py) 
+* [Rx](SX1276_Rx.py)
 * Thanks [martynwheeler/u-lora](https://github.com/martynwheeler/u-lora)

@@ -1,5 +1,5 @@
 ### Overview
-* This repo will provide basic Tx transmittion code and Rx reception code.
+* This repo will provide MicroPython codes for basic Tx transmittion and Rx reception.
 * SX1276 is a LoRa modem that can send or receive data over a long distance.
 * Many ESP32 LoRa development boards are using this modem: Heltec WiFi LoRa 32 V2, TTGO T-Beam V1.1
 * Adafruit also created a standalone breakout: Adafruit RFM95W

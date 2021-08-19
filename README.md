@@ -1,12 +1,12 @@
 ### Overview
-* This repo will provide MicroPython codes for basic Tx transmittion and Rx reception.
-* SX1276 is a LoRa modem that can send or receive data over a long distance.
+* This repo provides MicroPython codes for basic Tx transmittion and Rx reception of SX1276 chip.
+* SX1276 is a LoRa modem that can send and receive data over a long distance.
 * Adafruit created a standalone breakout: Adafruit RFM95W 
-    * Example code is for RFM95W with the help of Raspberry Pi Pico
+    * Example code in this repo is for RFM95W with the help of Raspberry Pi Pico
 * Many ESP32 LoRa development boards are using this modem: Heltec WiFi LoRa 32 V2, TTGO T-Beam V1.1 
-    * Example code can drive the on-board modem after GPIO remapping
+    * Example code drives the on-board modem after GPIO remapping
 * One key thing is they all use SPI as the control interface of LoRa modem.
-* SPI pins on RFM95W are exposed so we can hook it up with Raspberry Pi Pico while pins are marked on other two ESP32 LoRa development boards.
+* SPI pins on RFM95W are exposed so we can hook it up with Raspberry Pi Pico while pins are predefined on other two ESP32 LoRa development boards.
 ### See the wiring
 * Wiring RFM95W with Pico<br/>
    * We decide which GPIO we want to use
@@ -48,10 +48,11 @@
    ```
 <img src="T-Beam.webp"> </img>
 ### How to use SX1276
-* Enable the module if use Adafruit RFM95W (No enable pin on other ESP32 development boards so they are always enabled)
+* Enable the Adafruit RFM95W before use (No enable pin on other ESP32 development boards so they are always enabled)
 * Configure SPI communication to control the LoRa modem
 * Choose LoRa Modem other than FSK/OOK Modem
-* Set parameters: bandwidth (bw, Following waterfall diagram is what the signal out of LoRa modem looks like, I might provide a theoretical tutorial in the future), coding rate (CR), header mode, spreading factor (SF), syncword, preamble length, frequency, amplifier.
+* Set parameters: bandwidth (bw), coding rate (CR), header mode, spreading factor (SF), syncword, preamble length, frequency, amplifier.
+  * Following waterfall diagram is what the signal out of LoRa modem looks like, I might provide a tutorial about parameters in the future 
 * Set an interrupt routine service to read incoming message and to monitor modem's working status
 * Write FIFO data buffer when transmit and read when receive.
 ### Packet Structure
@@ -67,7 +68,7 @@
   * status registers
   * a 256-byte user-defined FIFO data buffer
 * We control the modem through this digital interface
-  * Practically, we read/write modem's registers via SPI protocol so we can configure its parameters (static configuration registers), get status, send or receive data (buffer registers).
+  * Practically, we read/write modem's registers via SPI protocol so we can configure its parameters (static configuration registers), query status, send or receive data (buffer registers).
 ### FIFO Buffer
 <img src="FIFO_Buffer.png"></img>
 * In order to write packet data into FIFO user should:
@@ -80,14 +81,14 @@
 * RF: Radio Frequency
 * RFI: RF Input
 * RFO: RF Output
-* { HF: {Band 1: ~915MHz}, LF: {Band 2: ~433MHz, Band 3: ~150MHz} }
+* { High Frequency: {Band 1: ~915MHz}, LF: {Band 2: ~433MHz, Band 3: ~150MHz} }
 * PA: Power Amplifier
 * Three amplifiers: RFO_LF, RFO_HF, PA_BOOST
 * PA_HP: High Power
 * PA_HF and PA_LF are high efficiency amplifiers
 * AFC: automatic frequency correction
 * RFOP: RF output power
-### Data Transmission Sequence (Figure 9)
+### Data Transmission Sequence (Datasheet Figure 9)
 * Change to Standby mode so the modem initiate everything
 * Start Tx loop
   * Prepare payload to Tx
@@ -101,9 +102,9 @@
 * Change to Rx Continuous mode
 * Wait for IRQ (RxDone and ValidHeader/PayloadCrcError)
   * In ISR, Read FIFO data buffer to get payload
-* Next IRQ
+* Next IRQ and next FIFO reading
 ### Follow code to learn SX1276
 * Use Rasberry Pi Pico and Adafruit RFM95W as the learning platform
 * [How to](https://github.com/xg590/IoT/tree/master/MicroPython#add-micropython-to-raspberry-pi-pico-hello-world) run MicroPython on Rapsberry Pi Pico
-* [Tx](SX1276_Tx.py) and [Rx](SX1276_Rx.py) MicroPython codes are commented extensively for learning   
+* MicroPython codes [Tx](SX1276_Tx.py) and [Rx](SX1276_Rx.py) are commented extensively for learning   
 * Thanks [martynwheeler/u-lora](https://github.com/martynwheeler/u-lora) and thanks [jgromes](https://github.com/jgromes/RadioLib/issues/347)

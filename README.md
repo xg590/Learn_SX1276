@@ -7,6 +7,8 @@
     * Example code drives the on-board modem after GPIO remapping
 * One key thing is they all use SPI as the control interface of LoRa modem.
 * SPI pins on RFM95W are exposed so we can hook it up with Raspberry Pi Pico while pins are predefined on other two ESP32 LoRa development boards.
+### Repo for production use
+Data link layer is implemented here: https://github.com/xg590/SX1276
 ### See the wiring
 * Wiring RFM95W with Pico<br/>
    * We decide which GPIO we want to use

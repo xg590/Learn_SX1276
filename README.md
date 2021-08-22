@@ -1,16 +1,22 @@
 ### Overview
+* This works at the physical layer.
 * This repo provides MicroPython codes for basic Tx transmittion and Rx reception of SX1276 chip.
 * SX1276 is a LoRa modem that can send and receive data over a long distance.
 * Adafruit created a standalone breakout: Adafruit RFM95W 
     * Example code in this repo is for RFM95W with the help of Raspberry Pi Pico
 * Many ESP32 LoRa development boards are using this modem: Heltec WiFi LoRa 32 V2, TTGO T-Beam V1.1 
-    * Example code drives the on-board modem after GPIO remapping
+    * Example code drives the on-board LoRa modem after GPIO remapping 
 * One key thing is they all use SPI as the control interface of LoRa modem.
 * SPI pins on RFM95W are exposed so we can hook it up with Raspberry Pi Pico while pins are predefined on other two ESP32 LoRa development boards.
 ### Repo for production use
-Data link layer is implemented here: https://github.com/xg590/SX1276
+* Data link layer is implemented in another [repo](https://github.com/xg590/SX1276)
+   * Adressing
+   * Broadcasting
+   * Request Acknowledgement
 ### See the wiring
-* Wiring RFM95W with Pico<br/>
+<details> 
+   <summary> <b>Wiring RFM95W with Pico</b><br/></summary> 
+   
    * We decide which GPIO we want to use
    ```
     # RFM95W         Pico GPIO
@@ -24,7 +30,10 @@ Data link layer is implemented here: https://github.com/xg590/SX1276
     SPI_CH         =  0
    ```
 <img src="Pico_RFM95W.png"> </img>
-* Heltec WiFi LoRa 32 V2<br/>
+</details> 
+<details> 
+   <summary> <b>Heltec WiFi LoRa 32 V2</b><br/></summary> 
+   
    * Predefined (see the pinout)
    ```
     LoRa_MISO_Pin = 19
@@ -38,7 +47,10 @@ Data link layer is implemented here: https://github.com/xg590/SX1276
     SPI_CH        =  1
    ```
 <img src="LoRa_32.png"> </img>
-* TTGO T-Beam V1.1<br/>
+</details> 
+<details> 
+   <summary> <b>TTGO T-Beam V1.1</b><br/></summary> 
+   
    * Predefined (see the pinout)
    ```
     LoRa_MISO_Pin = 19
@@ -49,6 +61,8 @@ Data link layer is implemented here: https://github.com/xg590/SX1276
     LoRa_DIO0_Pin = 26
    ```
 <img src="T-Beam.webp"> </img>
+</details> 
+
 ### How to use SX1276
 * Enable the Adafruit RFM95W before use (No enable pin on other ESP32 development boards so they are always enabled)
 * Configure SPI communication to control the LoRa modem

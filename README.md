@@ -14,6 +14,7 @@
    * Adressing
    * Broadcasting
    * Request Acknowledgement
+   * Frequency Hopping for large packet transmission while abide by [FCC 15.247](https://www.law.cornell.edu/cfr/text/47/15.247): Don't jam one frequency. 
 ### See the wiring
 <details> 
    <summary> <b>Wiring RFM95W with Pico</b><br/></summary> 

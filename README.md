@@ -1,6 +1,7 @@
 ### Overview
 * SX1276 is a LoRa modem that can send and receive data over a long distance.
-* This repo provides MicroPython codes for basic Tx transmittion and Rx reception of SX1276 chip.
+* This repo provides MicroPython codes for basic Tx transmittion and Rx reception of SX127x chip.
+* This repo is almost a rewrite of [martynwheeler/u-lora](https://github.com/martynwheeler/u-lora) with annotations.
 * Code is compatible with [jgromes/RadioLib](https://github.com/jgromes/RadioLib) (An Arduino LoRa Library)
 * Code works at the physical layer.
 * Adafruit created a standalone breakout based on SX1276: Adafruit RFM95W 

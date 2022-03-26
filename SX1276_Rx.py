@@ -1,4 +1,4 @@
-import time 
+import time, struct
 from machine import Pin, SPI   
 
 class LoRa:
@@ -227,7 +227,7 @@ class LoRa:
                 self.write('RegFifoAddrPtr', self.read('RegFifoRxCurrentAddr')) 
                 packet     = self.read('RegFifo', self.read('RegRxNbBytes')) 
                 PacketSnr  = self.read('RegPktSnrValue')
-                SNR        = PacketSnr / 4
+                SNR        = struct.unpack_from('b', bytes([PacketSnr]))[0] / 4
                 PacketRssi = self.read('RegPktRssiValue') 
                 #Rssi = read(RegRssiValue) 
                 if SNR < 0:

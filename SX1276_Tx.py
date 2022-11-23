@@ -91,7 +91,7 @@ class LoRa:
         SpreadingFactor  = {7:0x7, 9:0x9, 12:0xC}
         TxContinuousMode = {'normal':0b0, 'continuous':0b1}
         RxPayloadCrcOn   = {'disable':0b0, 'enable':0b1}
-        self.write('RegModemConfig2', SpreadingFactor[12] << 4 | TxContinuousMode['normal'] << 3 | RxPayloadCrcOn['disable'] << 2 | 0x00) 
+        self.write('RegModemConfig2', SpreadingFactor[12] << 4 | TxContinuousMode['normal'] << 3 | RxPayloadCrcOn['enable'] << 2 | 0x00) 
         LowDataRateOptimize = {'Disabled':0b0, 'Enabled':0b1}
         AgcAutoOn = {'register LnaGain':0b0, 'internal AGC loop':0b1}
         self.write('RegModemConfig3', LowDataRateOptimize['Enabled'] << 3 | AgcAutoOn['internal AGC loop'] << 2)  

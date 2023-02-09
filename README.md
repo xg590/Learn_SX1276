@@ -1,12 +1,12 @@
 ### Overview
-* This repo is to help the beginner learning how to operate the SX1276 chip (transmittion/Tx and reception/Rx only, the physcial layer work).
 * SX1276 is a LoRa modem that can send and receive data over a long distance (kilometers away) in an enery-efficient way.
+* This repo is to help the beginner learning how to operate the SX1276 chip (do basic transmittion/Tx and reception/Rx).
 * This repo is almost a rewrite of [martynwheeler/u-lora](https://github.com/martynwheeler/u-lora) with extensive annotations.
 * Code is compatible with [jgromes/RadioLib](https://github.com/jgromes/RadioLib) (An popular Arduino LoRa Library)
 ### Where to find SX1276
 * Many ESP32 LoRa development boards (Heltec WiFi LoRa 32 V2, TTGO T-Beam V1.1 ) are using SX1276.
 * Adafruit created a standalone breakout based on SX1276: Adafruit RFM95W 
-* In either situation, the MCU talks to SX1276 chip via SPI interface.  
+* Either way, the MCU talks to the SX1276 chip via a SPI interface.  
 ### Repo for production use
 * MAC link layer is implemented in another [repo](https://github.com/xg590/SX1276)
    * Adressing

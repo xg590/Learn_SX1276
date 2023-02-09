@@ -1,21 +1,18 @@
 ### Overview
-* SX1276 is a LoRa modem that can send and receive data over a long distance.
-* This repo provides MicroPython codes for basic Tx transmittion and Rx reception of SX127x chip.
-* This repo is almost a rewrite of [martynwheeler/u-lora](https://github.com/martynwheeler/u-lora) with annotations.
-* Code is compatible with [jgromes/RadioLib](https://github.com/jgromes/RadioLib) (An Arduino LoRa Library)
-* Code works at the physical layer.
+* This repo is to help the beginner learning how to operate the SX1276 chip (transmittion/Tx and reception/Rx only, the physcial layer work).
+* SX1276 is a LoRa modem that can send and receive data over a long distance (kilometers away) in an enery-efficient way.
+* This repo is almost a rewrite of [martynwheeler/u-lora](https://github.com/martynwheeler/u-lora) with extensive annotations.
+* Code is compatible with [jgromes/RadioLib](https://github.com/jgromes/RadioLib) (An popular Arduino LoRa Library)
+### Where to find SX1276
+* Many ESP32 LoRa development boards (Heltec WiFi LoRa 32 V2, TTGO T-Beam V1.1 ) are using SX1276.
 * Adafruit created a standalone breakout based on SX1276: Adafruit RFM95W 
-    * Example code in this repo is for RFM95W with the help of Raspberry Pi Pico
-* Many ESP32 LoRa development boards are using this modem: Heltec WiFi LoRa 32 V2, TTGO T-Beam V1.1 
-    * Example code drives the on-board LoRa modem after GPIO remapping 
-* One key thing is they all use SPI as the control interface of LoRa modem.
-* SPI pins on RFM95W are exposed so we can hook it up with Raspberry Pi Pico while pins are predefined on other two ESP32 LoRa development boards.
+* In either situation, the MCU talks to SX1276 chip via SPI interface.  
 ### Repo for production use
-* Data link layer is implemented in another [repo](https://github.com/xg590/SX1276)
+* MAC link layer is implemented in another [repo](https://github.com/xg590/SX1276)
    * Adressing
    * Broadcasting
    * Request Acknowledgement
-   * Frequency Hopping for large packet transmission while abide by [FCC 15.247](https://www.law.cornell.edu/cfr/text/47/15.247): Don't jam one frequency. 
+* Frequency Hopping is also implemented to tranmit large packet since we are abide by [FCC 15.247](https://www.law.cornell.edu/cfr/text/47/15.247): Don't jam one frequency. 
 ### See the wiring
 <details> 
    <summary> <b>Wiring RFM95W with Pico</b><br/></summary> 
@@ -69,7 +66,7 @@
 ### How to use SX1276
 * Enable the Adafruit RFM95W before use (No enable pin on other ESP32 development boards so they are always enabled)
 * Configure SPI communication to control the LoRa modem
-* Choose LoRa Modem other than FSK/OOK Modem
+* Choose LoRa mode instead of FSK/OOK mode
 * Set parameters: bandwidth (bw), coding rate (CR), header mode, spreading factor (SF), syncword, preamble length, frequency, amplifier.
   * Following waterfall diagram is what the signal out of LoRa modem looks like, I might provide a tutorial about parameters in the future 
 * Set an interrupt routine service to read incoming message and to monitor modem's working status

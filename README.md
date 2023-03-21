@@ -12,7 +12,7 @@
    * Adressing
    * Broadcasting
    * Request Acknowledgement
-* Frequency Hopping is also implemented to tranmit large packet since we are abide by [FCC 15.247](https://www.law.cornell.edu/cfr/text/47/15.247): Don't jam one frequency. 
+* Frequency Hopping is also implemented to tranmit large packet since we abide by [FCC 15.247](https://www.law.cornell.edu/cfr/text/47/15.247): Don't jam one frequency. 
 ### See the wiring
 <details> 
    <summary> <b>Wiring RFM95W with Pico</b><br/></summary> 
@@ -69,15 +69,15 @@
 * Choose LoRa mode instead of FSK/OOK mode
 * Set parameters: bandwidth (bw), coding rate (CR), header mode, spreading factor (SF), syncword, preamble length, frequency, amplifier.
   * Following waterfall diagram is what the signal out of LoRa modem looks like, I might provide a tutorial about parameters in the future 
-* Set an interrupt routine service to read incoming message and to monitor modem's working status
-* Write FIFO data buffer when transmit and read when receive.
+* Set an interrupt routine service (IRS) to read incoming message and to monitor modem's working status
+* When message is received during Rx, an IRS is triggered and we read FIFO data buffer. We write FIFO data buffer before the message is sent and then an IRS is triggered during Tx.
 ### Packet Structure
 * Waterfall diagram that shows the physical representation of modulated signal.
-<img src="pics/Packet_Structure_Waterfall.jpg"></img>
+<br /><img src="pics/Packet_Structure_Waterfall.jpg" style="width:500px"></img>
 * Header (exists in explicit mode): Payload length, payload's coding rate
 * Explicit header's coding rate is 4/8 and payload's could be different (Tx tells Rx which CR Tx uses).
 * SF is for whole packet
-<img src="pics/Packet_Structure.png"></img>
+<br /><img src="pics/Packet_Structure.png" style="width:700px"></img>
 ### 4.1.2. LoRa ® Digital Interface
 * The LoRa ® modem comprises three types of digital interface,
   * static configuration registers
@@ -86,7 +86,7 @@
 * We control the modem through this digital interface
   * Practically, we read/write modem's registers via SPI protocol so we can configure its parameters (static configuration registers), query status, send or receive data (buffer registers).
 ### FIFO Buffer
-<img src="pics/FIFO_Buffer.png"></img>
+<img src="pics/FIFO_Buffer.png" style="width:700px"></img>
 * In order to write packet data into FIFO user should:
   1. Set register RegFifoAddrPtr's content to *RegFifoTxBaseAddr (register RegFifoTxBaseAddr's content).
   2. Write *RegPayloadLength bytes to the FIFO (RegFifo)
@@ -105,7 +105,7 @@
 * AFC: automatic frequency correction
 * RFOP: RF output power
 ### Data Transmission Sequence (Datasheet Figure 9)
-* Change to Standby mode so the modem initiate everything
+* Change to Standby mode so the modem initializes everything
 * Start Tx loop
   * Prepare payload to Tx
   * Fill FIFO data buffer with payload
@@ -124,4 +124,4 @@
   * [How to](https://github.com/xg590/IoT/tree/master/MicroPython#add-micropython-to-raspberry-pi-pico-hello-world) run MicroPython on Pico
 * MicroPython codes [Tx](SX1276_Tx.py) and [Rx](SX1276_Rx.py) are commented extensively for learning
   * They are compatible with [RadioLib](https://github.com/jgromes/RadioLib) library.
-* Thanks [martynwheeler/u-lora](https://github.com/martynwheeler/u-lora) and thanks [jgromes](https://github.com/jgromes/RadioLib/issues/347)
+* Thanks [martynwheeler/u-lora](https://github.com/martynwheeler/u-lora) and [jgromes](https://github.com/jgromes/RadioLib/issues/347)
